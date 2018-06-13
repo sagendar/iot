@@ -1,0 +1,29 @@
+{
+    "name": "IoT Movements sensor",
+    "description": "IoT Movements sensor",
+    "keywords": ["iot", "Movements Sensor"],
+    "homepage": "https://github.com/sagendar/iot.git",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dominic O'Kerwin",
+            "email": "dominik.okerwin@crealogix.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.0",
+        "php": ">=7.0",
+        "slim/php-view": "^2.0",
+        "slim/twig-view": "^2.2",
+        "twig/extensions": "^1.5",
+        "zendframework/zend-i18n": "2.4.*",
+        "zendframework/zend-servicemanager": "2.4.*",
+        "zendframework/zend-config": "2.4.*",
+        "monolog/monolog": "^1.17"
+    },
+    "autoload": {
+        "psr-4": {
+            "IoT\\": "src/"
+        }
+    }
+}
