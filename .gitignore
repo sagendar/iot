@@ -1,0 +1,12 @@
+/_temp
+/vendor/
+/logs/*
+!/logs/README.md
+/cache/
+/.idea/
+node_modules/
+public/dist/
+frontend/gui-community/css/node_modules
+frontend/gui-community/css/dist
+config/local.php
+dist/
