@@ -1,18 +1,20 @@
 <?php
-
 return [
     'settings' => [
+        'displayErrorDetails' => true, // set to false in production
+        'addContentLengthHeader' => false, // Allow the web server to send the content-length header
 
-        'displayErrorDetails' => true,
+        'db' => [
+            'host' => "localhost",
+            'user' => "root",
+            'pass' => "root",
+            'dbname' => "iot"
+        ],
 
+        // Renderer settings
         'twig' => [
-            'cache' => true,
+            'template_path' => __DIR__ . '/../template/',
         ],
 
-        'pdo' => [
-            'dsn' => 'mysql:dbname=localhost;host=iot;port=3306;charset=UTF8',
-            'user' => 'root',
-            'pass' => 'root'
-        ],
-    ]
+    ],
 ];

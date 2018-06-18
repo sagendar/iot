@@ -1,7 +1,4 @@
 <?php
-
-chdir(dirname(__DIR__));
-
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
     // something which should probably be served as a static file
@@ -12,12 +9,11 @@ if (PHP_SAPI == 'cli-server') {
     }
 }
 
-// get environment from virtualhost
-define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?: 'production');
-
 require __DIR__ . '/../vendor/autoload.php';
 
-//session_start();
+session_start();
 
 $app = new IoT\Application();
+
+// Run app
 $app->run();

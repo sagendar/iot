@@ -1,0 +1,22 @@
+<html>
+<head>
+
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Camera</th>
+        <th>EntryTime</th>
+    </tr>
+    </thead>
+    {% for entry in entries %}
+    <tr>
+        <td>{{ entry.camera_name }}</td>
+        <td>{{ entry.entry_time }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+
+</html>

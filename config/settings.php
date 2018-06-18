@@ -13,7 +13,7 @@ return [
 
         // Renderer settings
         'twig' => [
-            'template_path' => __DIR__ . '/../templates/',
+            'template_path' => __DIR__ . '/../template/',
         ],
 
     ],

@@ -5,6 +5,8 @@ namespace IoT\Controller;
 use Crealogix\Auth\Auth;
 use Crealogix\Auth\Model\Person;
 use Crealogix\NotificationApi\NotificationApi;
+use Psr\Container\ContainerInterface;
+use Slim\Http\Request;
 use Slim\Http\Response;
 use Zend\Session\Container;
 
@@ -15,37 +17,40 @@ use Zend\Session\Container;
 abstract class AbstractController
 {
     /**
-     * @var \Slim\Container|\Psr\Container\ContainerInterface
+     * @var Request
      */
-    private $container;
+    protected $request;
+    /**
+     * @var Response
+     */
+    protected $response;
+    /**
+     * @var []
+     */
+    protected $args;
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
 
     /**
      * @param \Slim\Container|\Psr\Container\ContainerInterface $container
      */
-    public function __construct($container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
 
     }
 
     /**
-     * @param string $var
-     * @return mixed
-     */
-    protected function get($var)
-    {
-        return $this->container->get($var);
-    }
-
-    /**
-     * renders template with $data, links and person
+     * @param Request $request
      * @param Response $response
-     * @param string $template
-     * @param array $data
-     * @return Response
+     * @param array $args
      */
-    protected function render($response, $template, $data = [])
+    public function __invoke(Request $request, Response $response, array $args)
     {
-        return $this->get('view')->render($response, $template, $data);
+        $this->request = $request;
+        $this->response = $response;
+        $this->args = $args;
     }
 }

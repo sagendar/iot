@@ -2,11 +2,13 @@
 
 namespace IoT;
 
+use IoT\Controller\EntryController;
 use IoT\Controller\IndexController;
+use IoT\Entity\EntryCollection;
+use IoT\Repository\EntryRepository;
 use PDO;
 use Slim\App;
 use Slim\Views\Twig;
-use Zend\Config\Config;
 
 /**
  * Class Application
@@ -31,9 +33,15 @@ class Application
         $this->registerRoutes();
     }
 
+
     public function run()
     {
         $this->app->run();
+    }
+
+    public function getContainer()
+    {
+        return $this->app->getContainer();
     }
 
     protected function getSettings()
@@ -41,20 +49,15 @@ class Application
         return require __DIR__ . '/../config/settings.php';
     }
 
-    /**
-     * Kind of a service manager
-     */
     protected function registerServices()
     {
-        // services
         $container = $this->app->getContainer();
-
         /**
          * view renderer
          * @return Twig
          */
         $container['view'] = function () {
-            $view = new Twig(__DIR__ . '/../templates/');
+            $view = new Twig(__DIR__ . '/../template/');
 
             return $view;
         };
@@ -75,6 +78,14 @@ class Application
             return $pdo;
         };
 
+        /**
+         * @param $c
+         * @return EntryRepository
+         */
+        $container['entryRepo'] = function ($c) {
+            return new EntryRepository($c);
+        };
+
     }
 
     /**
@@ -92,12 +103,7 @@ class Application
     {
         $container = $this->app->getContainer();
 
-        // index
-        $this->app->map(['GET', 'POST'], '/', [new IndexController($container), 'index'])
-            ->setName('index');
-
-        // logout
-        $this->app->post('/api/entry', [new IndexController($container), 'logout'])
-            ->setName('insertData');
+        $this->app->get('/', IndexController::class)->setName("index");
+        $this->app->post('/api/entry', EntryController::class)->setName("entry");
     }
 }
