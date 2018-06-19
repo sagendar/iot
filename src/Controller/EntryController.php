@@ -29,13 +29,18 @@ class EntryController extends AbstractController
     private function insertEntryAction()
     {
         $post = $this->request->getParsedBody();
+        $regex = '/^[\d]{4}-[0-1]{1}[\d]{1}-[0-3]{1}[\d]{1} [0-2]{1}[\d]{1}:[0-5]{1}[\d]{1}:[0-5]{1}[\d]{1}$/';
+
         $entryTime = $post['entry_time'];
 
         $camera_id = $post['camera_id'];
 
-        if($this->container['entryRepo']->insertEntry($camera_id, $entryTime)) {
-            return $this->response->withJson(['status' => 'success'], 200);
+        if(is_integer(intval($camera_id)) && preg_match($regex, $entryTime)) {
+            if($this->container['entryRepo']->insertEntry($camera_id, $entryTime)) {
+                return $this->response->withJson(['status' => 'success'], 200);
+            }
         }
+
         return $this->response->withJson(['status' => 'error'], 400);
     }
 }
