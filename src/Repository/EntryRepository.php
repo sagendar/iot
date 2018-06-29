@@ -23,6 +23,8 @@ class EntryRepository
      */
     private $db;
 
+    private $entries;
+
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -30,21 +32,20 @@ class EntryRepository
     }
 
     public function getAllEntries() {
-        $entries = [];
         $row = 1;
         if (($handle = fopen("entries.CSV", "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $num = count($data);
                 $row++;
-                array_push($entries, [
+                array_push($this->entries, [
                     'camera_name' => $data[1],
                     'entry_time' => $data[2]
                 ]);
             }
             fclose($handle);
         }
-        print_r($entries);
-        return new EntryCollection(['entries' => $entries]);
+        print_r($this->entries);
+        return new EntryCollection(['entries' => $this->entries]);
     }
 
     public function insertEntry($fk_camera_id, $entry_time) {
