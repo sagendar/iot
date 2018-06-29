@@ -30,7 +30,7 @@ class EntryRepository
     }
 
     public function getAllEntries() {
-        $enties = [];
+        $entries = [];
         $row = 1;
         if (($handle = fopen("entries.CSV", "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -43,7 +43,7 @@ class EntryRepository
             }
             fclose($handle);
         }
-        return new EntryCollection(['entries' => $enties]);
+        return new EntryCollection(['entries' => $entries]);
     }
 
     public function insertEntry($fk_camera_id, $entry_time) {
