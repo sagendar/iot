@@ -32,20 +32,21 @@ class EntryRepository
     }
 
     public function getAllEntries() {
-        $row = 1;
-        if (($handle = fopen("entries.CSV", "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                $num = count($data);
-                array_push($this->entries, [
-                    'camera_name' => $data[$row][1],
-                    'entry_time' => $data[$row][2]
-                ]);
-                $row++;
-            }
-            fclose($handle);
-        }
-        print_r($this->entries);
-        return new EntryCollection(['entries' => $this->entries]);
+	$row = 1;
+	$entries = [];
+
+if (($handle = fopen("entries.csv", "r")) !== FALSE) {
+  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+    $num = count($data);
+    $row++;
+
+	array_push($entries, ['camera_name'=>$data[1],'entry_time'=>$data[2]]);
+  }
+  fclose($handle);
+}
+
+        print_r($data);
+        return new EntryCollection(['entries' => $entries]);
     }
 
     public function insertEntry($fk_camera_id, $entry_time) {
