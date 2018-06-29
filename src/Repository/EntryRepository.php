@@ -26,13 +26,24 @@ class EntryRepository
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->db = $this->container['db'];
+//        $this->db = $this->container['db'];
     }
 
     public function getAllEntries() {
-        $sql = $this->db->prepare("SELECT c.camera_name, e.entry_time FROM entry e JOIN camera c ON c.camera_id=e.fk_camera_id");
-        $sql->execute();
-        return new EntryCollection(['entries' => $sql->fetchAll()]);
+        $enties = [];
+        $row = 1;
+        if (($handle = fopen("entries.CSV", "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $num = count($data);
+                $row++;
+                $entries = [
+                    'camera_name' => $data[1],
+                    'entry_time' => $data[2]
+                ];
+            }
+            fclose($handle);
+        }
+        return new EntryCollection(['entries' => $enties]);
     }
 
     public function insertEntry($fk_camera_id, $entry_time) {
