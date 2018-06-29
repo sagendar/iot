@@ -43,6 +43,7 @@ class EntryRepository
             }
             fclose($handle);
         }
+        print_r($entries);
         return new EntryCollection(['entries' => $entries]);
     }
 
