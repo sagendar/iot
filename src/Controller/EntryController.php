@@ -33,10 +33,10 @@ class EntryController extends AbstractController
 
         $entryTime = $post['entry_time'];
 
-        $camera_id = $post['camera_id'];
+        $camera_name = $post['camera_name'];
 
-        if(is_integer(intval($camera_id)) && preg_match($regex, $entryTime)) {
-            if($this->container['entryRepo']->insertEntry($camera_id, $entryTime)) {
+        if(preg_match($regex, $entryTime)) {
+            if($this->container['entryRepo']->insertEntry($camera_name, $entryTime)) {
                 return $this->response->withJson(['status' => 'success'], 200);
             }
         }
