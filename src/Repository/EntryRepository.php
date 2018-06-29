@@ -36,11 +36,11 @@ class EntryRepository
         if (($handle = fopen("entries.CSV", "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $num = count($data);
-                $row++;
                 array_push($this->entries, [
-                    'camera_name' => $data[1],
-                    'entry_time' => $data[2]
+                    'camera_name' => $data[$row][1],
+                    'entry_time' => $data[$row][2]
                 ]);
+                $row++;
             }
             fclose($handle);
         }
