@@ -49,8 +49,11 @@ if (($handle = fopen("entries.csv", "r")) !== FALSE) {
         return new EntryCollection(['entries' => $entries]);
     }
 
-    public function insertEntry($fk_camera_id, $entry_time) {
-        $sql = $this->db->prepare("INSERT INTO entry(fk_camera_id, entry_time) VALUES ($fk_camera_id, '$entry_time')");
-        return $sql->execute();
+    public function insertEntry($camera_name, $entry_time) {
+        $handle = fopen("entries.csv", "a");
+        fputcsv($handle, ",".$camera_name.",".$entry_time);
+        fclose($handle);
+//        $sql = $this->db->prepare("INSERT INTO entry(fk_camera_id, entry_time) VALUES ($fk_camera_id, '$entry_time')");
+        return true;
     }
 }
