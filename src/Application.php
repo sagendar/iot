@@ -104,6 +104,6 @@ class Application
         $container = $this->app->getContainer();
 
         $this->app->get('/', IndexController::class)->setName("index");
-        $this->app->post('/api/entry', EntryController::class)->setName("entry");
+        $this->app->post('/', EntryController::class)->setName("entry");
     }
 }

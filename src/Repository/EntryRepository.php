@@ -51,9 +51,13 @@ if (($handle = fopen("entries.csv", "r")) !== FALSE) {
 
     public function insertEntry($camera_name, $entry_time) {
         $handle = fopen("entries.csv", "a");
-        fputcsv($handle, ",".$camera_name.",".$entry_time);
-        fclose($handle);
-//        $sql = $this->db->prepare("INSERT INTO entry(fk_camera_id, entry_time) VALUES ($fk_camera_id, '$entry_time')");
-        return true;
+	$line = "1," . $camera_name . "," . $entry_time;
+	if( fputcsv($handle, explode(',',$line))) {
+            fclose($handle);
+    	    return true;
+	} else {
+		fclose($handle);
+		return false;
+	}
     }
 }
